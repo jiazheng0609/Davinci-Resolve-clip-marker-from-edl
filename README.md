@@ -20,7 +20,7 @@ Import clip markers from .edl files in Davinci Resolve
   打開瀏覽器到 https://www.python.org/downloads/release/python-2716/  
   點「Windows x86-64 MSI installer」連結下載後執行。  
 安裝結束按「Finish」
-2. 把 `davinviResolveClipMark.py`、`edl.py`、`timeline.py`
+2. 把 `davinviResolveClipMark.py`、[`edl.py`](https://github.com/jiazheng0609/python-edl/blob/master/edl/__init__.py)、[`timeline.py`](https://github.com/eoyilmaz/timecode/blob/master/timecode/__init__.py)
 這三個檔案複製進此目錄裡：  
 `C:\ProgramData\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Comp`  
 3. 打開 Davinci Resolve (版本為 17)，新建新專案，將錄音檔匯入  
