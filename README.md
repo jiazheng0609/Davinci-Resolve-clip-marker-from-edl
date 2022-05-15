@@ -28,3 +28,32 @@ Import clip markers from .edl files in Davinci Resolve
 4. 在頂端選單選 Workspace → Scripts → Comp → davinciResolveClipMark ，即執行腳本  
   (簡體中文介面中叫做 工作區 → 腳本→ Comp → davinciResolveClipMark)
 5. 執行腳本時，程式會去抓與錄音檔位於同目錄底下且與錄音檔相同檔案名稱的 .edl 檔案，如果有抓到，會把標記資訊標在媒體池，以及目前有開啟的時間軸裡的音頻軌道上
+
+## 參考資料 References
+1. [CurrentTimelineItem Beat Marker.py](https://github.com/GuillaumeHullin/davinci-resolve-scripts/blob/main/CurrentTimelineItem%20Beat%20Marker.py)  
+   [Blackmagic Forum • View topic - Setting markers to the beat via script?](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=131670)  
+   我寫的這腳本是從這個前人作品修改而來的。 My script was built on this previous work.
+2. [Blackmagic Forum • View topic - Import clip markers](https://forum.blackmagicdesign.com/viewtopic.php?f=33&t=148476)  
+  Someone asked: What I can see there is no way of importing clip markers. The only option is to import timeline markers.  
+  PM： try TimelineItem.AddMarker
+3. [Blackmagic Forum • View topic - Exporting Clip Markers](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=61769)  
+  Mentioned Export -> Edit Index... and Python scripting API
+4. [Blackmagic Forum • View topic - Carry markers from Edit to Fusion?](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=82753)  
+   Also here’s a python script to import clip markers to text+ tool with keyframes
+5. [Unofficial DaVinci Resolve Scripting Documentation | DaVinciResolve-API-Docs](https://deric.github.io/DaVinciResolve-API-Docs/)
+6. [Blackmagic Forum • View topic - Scripting in the free version?](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=113252)
+7. [RegExr: Learn, Build, & Test RegEx](https://regexr.com/)  
+  with regex used in edl.py: `(\d+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S*)\s+(\d{1,2}:\d{1,2}:\d{1,2}[:;]\d{1,3})\s+(\d{1,2}:\d{1,2}:\d{1,2}[:;]\d{1,3})\s+(\d{1,2}:\d{1,2}:\d{1,2}[:;]\d{1,3})\s+(\d{1,2}:\d{1,2}:\d{1,2}[:;]\d{1,3})+\n(\S+)+\s\|C:(\S+)`
+
+### Some discussion not directly solving this problem
+1. [Blackmagic Forum • View topic - Transfer Clip Markers between Projects in Resolve](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=104531)  
+Copying a clip with a marker and pasting it into another project worked for me. The pasted clip carried across the marker. 
+2. [Blackmagic Forum • View topic - Exporting/Importing Clip Markers](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=79816)  
+Exporting EDL with markers is also timeline-only, and I don't think it includes the marker notes.    
+What I'm trying to do is come up with a way to associate pre-existing data about the clips with the clips. I've even gone so far as to look at the underlying database to figure out where markers are stored. Alas, they are stored in a fieldBlob associated with the clip:
+3. [Blackmagic Forum • View topic - Exporting Marker list with timecode](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=38106#p292517)  
+Screenshot showing how to export timeline marker edl
+4. [Blackmagic Forum • View topic - How to Export Markers ?](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=86068)  
+convert the Resolve's marker EDL to a human readable website 
+5. [Blackmagic Forum • View topic - Saving Markers](https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=107851)  
+if you create clip markers in the source viewer, those clip markers get attached to the clip in the media pool and will appear when the clip is edited into the timeline.
