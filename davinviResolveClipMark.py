@@ -1,7 +1,7 @@
-#!/usr/bin/python
 import sys
 import os
 
+print("Python version", sys.version)
 sys.path.append("C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\Scripting\Modules")
 #sys.path.append("/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules")
 import DaVinciResolveScript as dvr_script
@@ -31,6 +31,7 @@ fps = proj.GetSetting()['timelineFrameRate']
 def edlExist(mediaFilePath):
     # check if .edl file with same filename exists in same path as audio file
     edlPath = os.path.splitext(mediaFilePath)[0] + '.edl'
+    print("finding", edlPath, os.path.exists(edlPath))
     return os.path.exists(edlPath)
         
 def getMarkersFromEdl(filepath):
@@ -97,13 +98,14 @@ if (tl):
         for itemId in items:
             poolItem = items[itemId].GetMediaPoolItem()
             piProp = poolItem.GetClipProperty()
-            filepath = piProp['File Path']
-            print("timeline item " + filepath)
-            if (edlExist(filepath)):
-                markerList = getMarkersFromEdl(filepath)
-                addMarkerToClip(markerList, items[itemId])
-            else:
-                print(".edl for {} doesn't exist".format(filepath))
+            if 'File Path' in piProp:
+                filepath = piProp['File Path']
+                print("timeline item " + filepath)
+                if (edlExist(filepath)):
+                    markerList = getMarkersFromEdl(filepath)
+                    addMarkerToClip(markerList, items[itemId])
+                else:
+                    print(".edl for {} doesn't exist".format(filepath))
 
 
 print()
